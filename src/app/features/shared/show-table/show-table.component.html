@@ -1,0 +1,62 @@
+<div class="w-full grid grid-cols-1 md:grid-cols-2 bg-white p-2 justify-between items-center">
+  <mat-form-field>
+    <input name="search" matInput placeholder="Search..." [(ngModel)]="searchInput">
+    <button mat-icon-button matSuffix (click)="search()">
+      <mat-icon color="accent">search</mat-icon>
+    </button>
+    <button mat-icon-button matSuffix (click)="clearSearch()" *ngIf="searchInput">
+      <mat-icon color="accent">close</mat-icon>
+    </button>
+  </mat-form-field>
+  <mat-paginator [length]="shows.length < 30 ? shows.length : 999" [pageSize]="shows.length" aria-label="Select page of show results"></mat-paginator>
+</div>
+
+<table mat-table [dataSource]="shows" class="w-full"
+  matSort matSortActive="title" matSortDisableClear matSortDirection="asc">
+  <!-- Id Column -->
+  <ng-container matColumnDef="index">
+    <mat-header-cell mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+    <mat-cell mat-cell *matCellDef="let row">{{row.showId}}</mat-cell>
+  </ng-container>
+
+  <!-- Title Column -->
+  <ng-container matColumnDef="title">
+    <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Title</mat-header-cell>
+    <mat-cell mat-cell *matCellDef="let row">{{row.title}}</mat-cell>
+  </ng-container>
+
+  <!-- Release Column -->
+  <ng-container matColumnDef="releaseYear">
+    <mat-header-cell [hidden]="smallScreen" mat-header-cell *matHeaderCellDef>Release Year</mat-header-cell>
+    <mat-cell [hidden]="smallScreen" mat-cell *matCellDef="let row">{{row.releaseYear}}</mat-cell>
+  </ng-container>
+
+  <!-- Rating Column -->
+  <ng-container matColumnDef="rating">
+    <mat-header-cell [hidden]="smallScreen" mat-header-cell *matHeaderCellDef>Rating</mat-header-cell>
+    <mat-cell [hidden]="smallScreen" mat-cell *matCellDef="let row">{{row.rating}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <mat-header-cell mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell mat-cell *matCellDef="let row">
+      <button
+        matTooltip="Add to favorites"
+        matTooltipPosition="above"
+        mat-icon-button color="primary" (click)="addToFavorite(row)" aria-label="Add to favorite">
+        <mat-icon>bookmark</mat-icon>
+      </button>
+      <button
+        matTooltip="View details"
+        matTooltipPosition="above"
+        mat-icon-button color="primary" aria-label="View details" (click)="showDetails(row)">
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</table>
+
+<ng-container *ngIf="shows$ | async"></ng-container>

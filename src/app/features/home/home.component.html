@@ -1,0 +1,75 @@
+<div class="home-wrapper">
+  <mat-sidenav-container color="primary">
+      <mat-sidenav opened mode="side" class="sidenav mat-elevation-z1">
+        <div class="h-full sidenav-background">
+          <div class="flex flex-col h-full sidenav-scrim">
+            <div class="p-3 flex justify-center">
+              <img class="sidenav-logo" src="../../../assets/images/netflix-logo.png" />
+            </div>
+
+            <div class="m-3"><mat-divider></mat-divider></div>
+
+            <div *ngFor="let item of menuItems" class="sidenav-item px-3">
+              <a [routerLink]="[item.path]" class="sidenav-link mr-1 flex items-center space-x-3 px-3 py-2" routerLinkActive="sidenav-link-active">
+                <mat-icon routerLinkActive="material-icons-outlined">{{item.icon}}</mat-icon>
+                <span class="sidenav-item-name">{{item.title}}</span>
+              </a>
+            </div>
+
+            <div class="mt-auto mb-3 mr-3">
+              <div class="m-3"><mat-divider class="m-3"></mat-divider></div>
+              <span class="font-thin text-sm">© Bryce Gallichan 2023</span>
+            </div>
+          </div>
+        </div>
+
+      </mat-sidenav>
+
+      <mat-sidenav-content>
+        <div class="flex flex-col h-screen">
+          <mat-toolbar class="sticky top-0 z-50" style="transition: box-shadow 0.5s;" [ngStyle]="{'box-shadow': scrollPos > 10 ? '0px 1px 2px #9E9E9E' : 'none'}">
+            <div class="grid grid-cols-12 w-full">
+              <div class="col-span-8 flex items-center">
+                <button mat-icon-button (click)="sidenav.toggle()">
+                  <mat-icon>menu</mat-icon>
+                </button>
+                <span class="ml-4 text-2xl">{{getTitle()}}</span>
+              </div>
+              <div class="col-span-4 flex justify-end items-center">
+                <mat-icon *ngIf="isDevMode"
+                  class="text-red-600 mr-1"
+                  matTooltip="Application is running in development mode"
+                  matTooltipPosition="below">
+                  bug_report
+                </mat-icon>
+
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                  <ng-container *ngIf="currentUser?.photoURL; else defaultAvatar">
+                    <img class="w-8 ml-1 rounded-full" src="{{getUserPhoto()}}" referrerpolicy="no-referrer"/>
+                  </ng-container>
+                  <ng-template #defaultAvatar>
+                    <mat-icon>account_circle</mat-icon>
+                  </ng-template>
+                </button>
+                <mat-menu #menu>
+                  <button mat-menu-item disabled><span class="px-3">{{currentUser?.email || 'None'}}</span></button>
+                  <div class="px-2"><mat-divider></mat-divider></div>
+                  <button mat-menu-item (click)="resetPassword()" *ngIf="isPasswordProvider()">
+                    <mat-icon class="ml-3">lock</mat-icon>
+                    <span class="mr-3">Reset Password</span>
+                  </button>
+                  <button mat-menu-item (click)="logout()">
+                    <mat-icon class="ml-3">logout</mat-icon>
+                    <span class="mr-3">Sign out</span>
+                  </button>
+                </mat-menu>
+              </div>
+            </div>
+          </mat-toolbar>
+          <div class="h-full home-content px-3 pt-3" (scroll)="onWindowScroll($event)">
+              <router-outlet></router-outlet>
+          </div>
+        </div>
+      </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

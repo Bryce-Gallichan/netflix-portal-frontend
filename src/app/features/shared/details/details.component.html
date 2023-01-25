@@ -1,0 +1,52 @@
+<mat-card class="max-w-md h-full">
+  <mat-card-header>
+    <mat-card-title>
+      <div class="flex items-center justify-center">
+        <ng-container *ngIf="showData.type === 'Movie'; else tvShowIcon">
+          <mat-icon color="primary" class="mr-3">movie</mat-icon>
+        </ng-container>
+        <ng-template #tvShowIcon>
+          <mat-icon color="primary" class="mr-3">live_tv</mat-icon>
+        </ng-template>
+        <div class="flex flex-col">
+          <span class="mr-2">{{showData.title}}</span>
+        </div>
+      </div>
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-chip-list aria-label="Dog selection">
+      <mat-chip>
+        {{showData.rating}}
+      </mat-chip>
+      <mat-chip color="primary" [selectable]="false">
+        {{showData.duration}}
+      </mat-chip>
+      <mat-chip color="accent" [selectable]="false">
+        {{showData.releaseYear}}
+      </mat-chip>
+    </mat-chip-list>
+
+    <hr class="my-4"/>
+
+    <div class="flex space-x-2">
+      <span class="font-bold">Director:</span>
+      <span>{{showData.director ? showData.director : '-'}}</span>
+    </div>
+
+    <div class="flex space-x-2 mb-4">
+      <span class="font-bold">Country:</span>
+      <span>{{showData.country ? showData.country : '-'}}</span>
+    </div>
+
+    <p>
+      {{showData.description}}
+    </p>
+  </mat-card-content>
+  <mat-card-actions align="end" *ngIf="allowDelete">
+    <button mat-button (click)="deleteEvent.emit()">
+      DELETE
+    </button>
+  </mat-card-actions>
+</mat-card>

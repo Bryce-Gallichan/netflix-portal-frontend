@@ -1,0 +1,79 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+//Custom variables
+$background-grey: #F0F0F0;
+$primary: #B71C1C;
+$secondary: #EF5350;
+$tertiary: #424242;
+$text-light: #FFFFFF;
+$text-light-muted: #FFFFFFB3;
+$text-dark: #424242;
+$text-dark-muted: #42424280;
+$text-muted: #616161;
+$scrim-light: #FFFFFF33;
+$scrim-dark: #4242421A;
+
+$custom-secondary-palette: (
+  50: #424242,
+  100: #424242,
+  200: #424242,
+  300: #424242,
+  400: #424242,
+  500: #424242,
+  600: #424242,
+  700: #424242,
+  800: #424242,
+  900: #424242,
+  A100: #424242,
+  A200: #424242,
+  A400: #424242,
+  A700: #424242,
+  contrast: (
+    50: white,
+    100: white,
+    200: white,
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: white,
+    A200: white,
+    A400: white,
+    A700: white,
+  )
+);
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$netflix-portal-primary: mat.define-palette(mat.$red-palette);
+$netflix-portal-accent: mat.define-palette($custom-secondary-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$netflix-portal-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$netflix-portal-theme: mat.define-light-theme((
+  color: (
+    primary: $netflix-portal-primary,
+    accent: $netflix-portal-accent,
+    warn: $netflix-portal-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($netflix-portal-theme);

@@ -1,0 +1,9 @@
+<ng-container *ngIf='loading'>
+  <app-spinner></app-spinner>
+</ng-container>
+
+<div [hidden]="loading">
+  <mat-card class="mb-4">
+    <app-show-table (loadingChangeEvent)="loadingChange($event)" [showType]="'TV Show'"></app-show-table>
+  </mat-card>
+</div>
