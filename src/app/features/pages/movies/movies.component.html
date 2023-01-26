@@ -2,7 +2,7 @@
   <app-spinner></app-spinner>
 </ng-container>
 
-<div [hidden]="loading">
+<div>
   <mat-card class="mb-4">
     <app-show-table (loadingChangeEvent)="loadingChange($event)" [showType]="'Movie'"></app-show-table>
   </mat-card>

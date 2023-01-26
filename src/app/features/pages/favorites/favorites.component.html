@@ -1,18 +1,15 @@
-<ng-container *ngIf='loading; else favorites'>
+<ng-container *ngIf='loading'>
   <app-spinner></app-spinner>
 </ng-container>
 
-<ng-template #favorites>
+<ng-container *ngIf="!shows || shows.length < 1">
+  <span class="mx-8 italic text-xl">Nothing here yet! Movies or TV Shows that you favorite will appear here</span>
+</ng-container>
 
-  <ng-container *ngIf="shows.length < 1">
-    <span class="mx-8 italic text-xl">Nothing here yet! Movies or TV Shows that you favorite will appear here</span>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+  <ng-container *ngFor="let show of shows">
+    <app-details [showData]="show" [allowDelete]="true" (deleteEvent)="deleteFavorite(show.showId)"></app-details>
   </ng-container>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-    <ng-container *ngFor="let show of shows">
-      <app-details [showData]="show" [allowDelete]="true" (deleteEvent)="deleteFavorite(show.showId)"></app-details>
-    </ng-container>
-  </div>
-</ng-template>
+</div>
 
 <ng-container *ngIf="shows$ | async"></ng-container>

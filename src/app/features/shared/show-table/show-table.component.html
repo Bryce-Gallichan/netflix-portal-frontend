@@ -22,7 +22,11 @@
   <!-- Title Column -->
   <ng-container matColumnDef="title">
     <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Title</mat-header-cell>
-    <mat-cell mat-cell *matCellDef="let row">{{row.title}}</mat-cell>
+    <mat-cell mat-cell *matCellDef="let row">
+      <div (click)="showDetails(row)" class="cursor-pointer">
+        {{row.title}}
+      </div>
+    </mat-cell>
   </ng-container>
 
   <!-- Release Column -->
